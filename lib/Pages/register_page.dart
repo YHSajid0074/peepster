@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:peepster/components/buttons.dart';
-import 'package:peepster/components/text_field.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+import '../components/buttons.dart';
+import '../components/text_field.dart';
+
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   @override
+  final TextEditingController nameController=TextEditingController();
   final TextEditingController emailController=TextEditingController();
   final TextEditingController pwController=TextEditingController();
+  final TextEditingController confirmPwController=TextEditingController();
 
 
   Widget build(BuildContext context) {
@@ -35,39 +38,44 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(height: 50,),
-              Text('Welcome back, you\'ve been missed!',
+              Text("Let's create an account for you",
                 style: TextStyle(color: Theme.of(context).colorScheme.primary,fontSize: 16),
               ),
+
               SizedBox(height: 25,),
-              MyTextField(controller: emailController,
-                  hintText: 'Enter your email..',
-                  obscureText:false),
-                SizedBox(height: 10,),
-              MyTextField(controller: pwController,
-                  hintText: 'Enter password',
+
+              MyTextField(controller: nameController,
+                  hintText: 'Enter name',
                   obscureText:true
               ),
 
               SizedBox(height: 10,),
 
-              Align(
-                alignment: Alignment.centerRight,
-                  child: Text("Forgot Password?",style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold),)
+              MyTextField(controller: emailController,
+                  hintText: 'Enter your email..',
+                  obscureText:true
               ),
 
+              SizedBox(height: 10,),
+              MyTextField(controller: pwController,
+                  hintText: 'Enter password',
+                  obscureText:false),
+              SizedBox(height: 10,),
+              MyTextField(controller: confirmPwController,
+                  hintText: 'Confirm password',
+                  obscureText:true
+              ),
 
-             SizedBox(height: 25,),
+              SizedBox(height: 25,),
 
-             MyButton(onTap: (){},
-                 text:'Login',
-             ),
+              MyButton(onTap: (){},
+                text:'Register now',
+              ),
               SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Not a member?',style: TextStyle(
+                  Text('Already a member?',style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   ),
@@ -75,11 +83,11 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: (){
 
                     },
-                      child: Text(' Register now',style: TextStyle(
+                    child: Text(' Login now',style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold
-                      ),
-                  ),
+                        fontWeight: FontWeight.bold
+                    ),
+                    ),
                   ),
                 ],
               ),
@@ -90,5 +98,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-

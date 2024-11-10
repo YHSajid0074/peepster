@@ -5,8 +5,6 @@ class SettingsTile extends StatelessWidget {
   final String title;
   final Widget action;
 
-
-
   const SettingsTile({
     super.key,
     required this.title,
@@ -25,9 +23,8 @@ class SettingsTile extends StatelessWidget {
       padding: EdgeInsets.all(10),
       child:  ListTile(
             title: Text(title,style: TextStyle(fontWeight: FontWeight.bold),),
-            trailing:action
+            trailing:action,
         )
     );
-
   }
 }
