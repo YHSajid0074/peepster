@@ -1,21 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:peepster/components/loading_circle.dart';
+import 'package:peepster/services/auth/auth_service.dart';
 
 import '../components/buttons.dart';
 import '../components/text_field.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final void Function( )? onTap;
+  const RegisterPage({super.key,
+    required this.onTap,
+  });
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+
+  final _auth=AuthService();
+
   @override
   final TextEditingController nameController=TextEditingController();
   final TextEditingController emailController=TextEditingController();
   final TextEditingController pwController=TextEditingController();
   final TextEditingController confirmPwController=TextEditingController();
+
+  void register()async{
+    if(pwController.text == confirmPwController.text) {
+      showLoadingCircle(context);
+      try {
+        await _auth.registerEmailPassword(
+            emailController.text,
+            pwController.text
+        );
+        if (mounted) hideLoadingCircle(context);
+      } catch (e) {
+        if (mounted) hideLoadingCircle(context);
+        if (mounted) {
+          showDialog(
+              context: context,
+              builder: (context) =>
+                  AlertDialog(
+                    title: Text(e.toString())
+                    ,
+                  )
+          );
+        }
+      }
+    }else{
+      showDialog(
+          context: context,
+          builder: (context) =>
+              AlertDialog(
+                title: Text("password dont match"),
+              )
+      );
+    }
+  }
 
 
   Widget build(BuildContext context) {
@@ -68,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               SizedBox(height: 25,),
 
-              MyButton(onTap: (){},
+              MyButton(onTap:register,
                 text:'Register now',
               ),
               SizedBox(height: 30,),
@@ -80,9 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   ),
                   GestureDetector(
-                    onTap: (){
-
-                    },
+                    onTap: widget.onTap,
                     child: Text(' Login now',style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold

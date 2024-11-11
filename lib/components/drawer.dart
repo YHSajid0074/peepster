@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:peepster/components/drawer_tile.dart';
 import 'package:peepster/Pages/setting_page.dart';
+import 'package:peepster/services/auth/auth_service.dart';
 
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
-
+   MyDrawer({super.key});
+  final _auth =AuthService();
+  void logout(){
+    _auth.logout();
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -65,7 +69,15 @@ class MyDrawer extends StatelessWidget {
               ),
             ),
 
+            const Spacer(),
 
+            Padding(
+              padding: const EdgeInsets.fromLTRB(23, 20,0,0),
+              child: DrawerTile(
+                  title: 'L O G O U T',
+                  icon:Icons.logout,
+                  onTap: logout),
+            )
           ],
         )
     ),

@@ -1,18 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:peepster/components/buttons.dart';
+import 'package:peepster/components/loading_circle.dart';
 import 'package:peepster/components/text_field.dart';
+import 'package:peepster/services/auth/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+
+  final void Function( )? onTap;
+
+  const LoginPage({super.key,
+    required this.onTap,
+  });
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final _auth=AuthService();
   @override
   final TextEditingController emailController=TextEditingController();
   final TextEditingController pwController=TextEditingController();
+
+  void login()async{
+    showLoadingCircle(context);
+    try{
+      await _auth.loginEmailPassword(emailController.text, pwController.text);
+     if(mounted) hideLoadingCircle(context);
+    }catch(e){
+      if(mounted) hideLoadingCircle(context);
+      showDialog(
+          context: context,
+          builder: (context) =>
+              AlertDialog(
+                title: Text(e.toString()),
+              )
+      );
+    }
+  }
 
 
   Widget build(BuildContext context) {
@@ -42,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
               MyTextField(controller: emailController,
                   hintText: 'Enter your email..',
                   obscureText:false),
-                SizedBox(height: 10,),
+              SizedBox(height: 10,),
               MyTextField(controller: pwController,
                   hintText: 'Enter password',
                   obscureText:true
@@ -51,18 +77,18 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 10,),
 
               Align(
-                alignment: Alignment.centerRight,
+                  alignment: Alignment.centerRight,
                   child: Text("Forgot Password?",style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold),)
               ),
 
 
-             SizedBox(height: 25,),
+              SizedBox(height: 25,),
 
-             MyButton(onTap: (){},
-                 text:'Login',
-             ),
+              MyButton(onTap: login,
+                text:'Login',
+              ),
               SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -72,14 +98,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ),
                   GestureDetector(
-                    onTap: (){
-
-                    },
-                      child: Text(' Register now',style: TextStyle(
+                    onTap: widget.onTap,
+                    child: Text(' Register now',style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold
-                      ),
-                  ),
+                        fontWeight: FontWeight.bold
+                    ),
+                    ),
                   ),
                 ],
               ),

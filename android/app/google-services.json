@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "871731269072",
+    "project_id": "peepsterdb",
+    "storage_bucket": "peepsterdb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871731269072:android:6b89491397c7820e2dfdd5",
+        "android_client_info": {
+          "package_name": "com.peepster.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXzBb3qzanmZGtYgeK0AlXdxWEswswlpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
