@@ -1,4 +1,4 @@
-package com.example.peepster
+package com.peepster.app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peepster/components/loading_circle.dart';
 import 'package:peepster/services/auth/auth_service.dart';
+import 'package:peepster/services/database/database_service.dart';
 
 import '../components/buttons.dart';
 import '../components/text_field.dart';
@@ -18,8 +19,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
 
   final _auth=AuthService();
+  final _db=DatabaseService();
 
-  @override
   final TextEditingController nameController=TextEditingController();
   final TextEditingController emailController=TextEditingController();
   final TextEditingController pwController=TextEditingController();
@@ -34,6 +35,11 @@ class _RegisterPageState extends State<RegisterPage> {
             pwController.text
         );
         if (mounted) hideLoadingCircle(context);
+
+
+        await _db.saveUserInfoInFirebase(name: nameController.text, email: emailController.text);
+
+
       } catch (e) {
         if (mounted) hideLoadingCircle(context);
         if (mounted) {
@@ -87,20 +93,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
               MyTextField(controller: nameController,
                   hintText: 'Enter name',
-                  obscureText:true
+                  obscureText:false
               ),
 
               SizedBox(height: 10,),
 
               MyTextField(controller: emailController,
                   hintText: 'Enter your email..',
-                  obscureText:true
+                  obscureText:false
               ),
 
               SizedBox(height: 10,),
               MyTextField(controller: pwController,
                   hintText: 'Enter password',
-                  obscureText:false),
+                  obscureText:true),
               SizedBox(height: 10,),
               MyTextField(controller: confirmPwController,
                   hintText: 'Confirm password',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peepster/Pages/profile_page.dart';
 import 'package:peepster/components/drawer_tile.dart';
 import 'package:peepster/Pages/setting_page.dart';
 import 'package:peepster/services/auth/auth_service.dart';
@@ -47,7 +48,11 @@ class MyDrawer extends StatelessWidget {
                 title: 'P R O F I L E',
                 icon: Icons.person,
                 onTap: (){
-
+                 Navigator.pop(context);
+                 Navigator.push( context,MaterialPageRoute(builder: (context)=>ProfilePage(uid: _auth.getCurrentUid()
+                    )
+                   ,)
+                 );
                 },
 
               ),
